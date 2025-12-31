@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+
+
+@layer base{
+html,
+body {
+  
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+
+}
+
+body{
+
+   /* font-family: "Inter", system-ui, sans-serif;  */
+
+   font-family: monospace;
+  
+  background: linear-gradient(
+    185deg,
+    rgb(148, 205, 234) 60%,
+    rgb(252, 253, 253) 65%,
+    yellow 75%,
+    rgb(147, 147, 4) 100%
+    
+  );
+}
+  
+
+  }
