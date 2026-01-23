@@ -1,32 +1,171 @@
 @import "tailwindcss";
 
-
-
 @layer base{
 html,
 body {
-  
   margin: 0;
   padding: 0;
   min-height: 100%;
-
 }
 
 body{
-
-   /* font-family: "Inter", system-ui, sans-serif;  */
-
-   font-family: monospace;
-  
-  background: linear-gradient(
-    185deg,
-    rgb(148, 205, 234) 60%,
-    rgb(252, 253, 253) 65%,
-    yellow 75%,
-    rgb(147, 147, 4) 100%
-    
-  );
+  font-family: monospace;
+  color:white;
+  background: #0F172A;
 }
+}
+
+@layer components {
+.list-container {
+    @apply 
+    bg-slate-800 
+    p-6 rounded-2xl shadow-lg   
+    border border-slate-700
+  }
+
+
+.list-card {
+    @apply 
+    bg-slate-900/50 
+    px-6 py-4 rounded-2xl shadow-lg 
+    text-lg text-slate-100
+    border border-slate-700/50
+    mb-2;
+  }
+ 
+  .input-label {
+    @apply 
+    block 
+    font-medium text-xl 
+    mb-1
+  }
+
+  .input-field {
+    @apply
+    bg-white 
+    text-black 
+    w-full px-4 py-2 rounded-lg
+    focus:border-2 focus:border-orange-500 focus:outline-none 
+    transition
+  }
+
+   .input-field-small {
+    @apply
+    bg-white 
+    text-black 
+    w-full px-2 py-1 rounded-md mb-2
+    focus:border-2 focus:border-orange-500 focus:outline-none 
+    transition
+  }
+
+  .message-success {
+    @apply   
+    bg-green-700   
+    rounded-lg  mb-6 py-4  shadow-md
+    text-base
+    text-white text-center 
+    border border-green-500 
+  }
+
+  .message-fail {
+    @apply 
+    bg-red-700 
+    rounded-lg mb-4 py-2 shadow-md
+    text-base
+    text-white text-center 
+    border border-red-500  
+  }
+
+
+  .headline {
+    @apply 
+    text-white
+    text-2xl font-semibold 
+  }
+
+  .notes {
+    @apply
+    text-sm text-slate-300
+  }
+
+  .btn-add { 
+    @apply  
+    bg-emerald-600
+    rounded-lg  px-4 py-2 
+    text-base font-semibold text-white 
+    hover:bg-emerald-500
+    cursor-pointer 
+    transition
+    active:scale-90 active:bg-emerald-600
+  }
+
+  .btn-toggle { 
+    @apply
+    bg-slate-700 
+    rounded-lg px-2 py-2
+    text-base font-semibold text-slate-100
+    cursor-pointer 
+    transition
+    hover:bg-slate-600
+  }
+
+  .btn-toggle-selected { 
+    @apply
+    bg-emerald-600 
+    rounded-lg px-2 py-2
+    text-base font-semibold text-white
+    cursor-pointer 
+    transition
+   
+  }
+
+  .btn-edit {
+    @apply 
+    rounded-md p-1 
+    text-slate-400 
+    text-sm
+    hover:text-white hover:bg-slate-700
+    transition
+    active:scale-90
+  }
+
+   .btn-delete {
+    @apply 
+    rounded-md p-1 
+    text-red-300 
+    text-sm
+    hover:text-white hover:bg-red-700
+    transition
+    active:scale-90
+  }
+
+    .btn-cancel {
+    @apply  
+    bg-red-600
+    rounded-lg  px-4 py-2 
+    text-base font-semibold text-white 
+    hover:bg-red-500
+    cursor-pointer 
+    transition
+    active:scale-90 active:bg-red-600
+  }
+
+
+
   
 
-  }
+ 
+  
+}
+
+
+
+
+/* text-xs     ~12px
+text-sm     ~14px
+text-base   ~16px  (default)
+text-lg     ~18px
+text-xl     ~20px
+text-2xl    ~24px
+text-3xl    ~30px
+text-4xl    ~36px */

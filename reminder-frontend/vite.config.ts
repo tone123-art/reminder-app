@@ -5,5 +5,13 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
-  server:{ port: 5200, strictPort: true},
-});
+  server:{ 
+    port: 5200, 
+    strictPort: true,  
+    proxy: {
+    "/api": {
+        target: "http://localhost:4500",
+        changeOrigin: true,
+        secure: false,
+      },
+}}});
