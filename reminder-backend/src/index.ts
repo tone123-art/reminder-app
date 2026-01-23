@@ -1,27 +1,39 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
-import reminderRouter from "./routes/reminder.js";
+import taskRouter from "./routes/task.js";
+import authRouter from "./routes/auth.js";
+import calendarRouter from "./routes/calendar.js"
+import userRouter from "./routes/user.js"
+import shoppingRouter from "./routes/shopping.js"
+import moviesRouter from "./routes/movies.js"
+import booksRouter from "./routes/books.js"
 
 
-dotenv.config();
+const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5200";
 
 const app = express();
-
 app.use(cors({
-  origin: "http://localhost:5200",
+  origin: allowedOrigin,
   credentials: true,
 }));
+
+
+
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api/reminder", reminderRouter);
 
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
+app.use("/api/tasks", taskRouter);
+app.use("/api/shopping", shoppingRouter);
+app.use("/api/movies", moviesRouter);
+app.use("/api/books", booksRouter);
+app.use("/api/calendar", calendarRouter);
 
-app.get("/api/reminder", (_req, res) => {
-  res.json({ ok: true });
-});
 
 const port = Number(process.env.PORT) || 4500;
 app.listen(port, () => {
