@@ -11,9 +11,13 @@ export default async function loader({request}:LoaderFunctionArgs){
             ...(cookieHeader ? { Cookie: cookieHeader } : {})
     }
   });
-    if (!res.ok) {
-    throw new Response("Failed to load books", { status: 500 });
-    }
+    if (res.status === 401) {
+  throw new Response("Unauthorized", { status: 401 });
+}
+if (!res.ok) {
+  const body = await res.text().catch(() => "");
+  throw new Response(`Books failed: ${res.status}\n${body}`, { status: res.status });
+}
 
     const books = (await res.json()) as book[];
   return {books}
