@@ -76,7 +76,7 @@ export default function LoginPage(){
 return (
 
    <div className="min-h-[70vh] grid place-items-center p-8">
-   <div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white">
+   <div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white text-black">
    
      {/* Choose Login or SignUp */}
    <div className="flex items-center justify-between mb-4">
@@ -130,7 +130,7 @@ return (
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={loading}
-                className="flex-1 px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
+                className="flex-1 px-3 py-2 text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
               />
         <button
                 type="button"
