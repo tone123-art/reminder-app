@@ -14,24 +14,24 @@ export default function ProtectedLayout() {
 
 
   useEffect(() => {
+    if (cachedAuth) return;
     fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
       credentials: "include"
     })
       .then(res => (res.ok ? res.json() : Promise.reject()))
       .then(data => {
         const role = data?.user?.role;
-
-     
-        if (role === "applicant") {
-          setStatus("denied");
-        } else {
-          setStatus("allowed");
-        }
+        const allowed = role !== "applicant";
+        cachedAuth = { allowed };
+        setStatus(allowed ? "allowed" : "denied");
       })
-      .catch(() => setStatus("denied"));
+      .catch(() => {
+        cachedAuth = { allowed: false };
+        setStatus("denied")});
   }, []);
 
-  if (status === "loading") return null;
+   if (status === "loading") return <div className="p-6">Loading…</div>; 
+
 
   if (status === "denied") {
     const redirectTo = encodeURIComponent(

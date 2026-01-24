@@ -23,7 +23,7 @@ export default function Header(){
 
     <div className="flex items-center min-h-16">
 
-   <h1 className="py-4 text-3xl text-white text-center font-bold absolute left-1/2 -translate-x-1/2"> The Reminder App2 </h1>
+   <h1 className="py-4 text-3xl text-white text-center font-bold absolute left-1/2 -translate-x-1/2"> The Reminder App5 </h1>
     
     <div className="ml-auto pr-12">
     {isLoggedIn ? <Link to='/login' onClick={logout}>

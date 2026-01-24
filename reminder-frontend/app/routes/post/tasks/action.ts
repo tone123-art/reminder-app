@@ -32,7 +32,7 @@ export default async function action({request}:ActionFunctionArgs) {
     if(Object.keys(errors).length>0){return {errors}}
 
      try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/tasks/addTask`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/addTask`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json",...(cookieHeader ? {Cookie : cookieHeader}:{})},
