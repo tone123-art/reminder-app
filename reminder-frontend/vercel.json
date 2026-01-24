@@ -1,8 +1,0 @@
-{
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "https://reminder-app-backend-hht0.onrender.com/api/$1"
-    }
-  ]
-}

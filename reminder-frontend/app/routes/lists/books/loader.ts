@@ -3,14 +3,12 @@ import type { LoaderFunctionArgs } from "react-router";
 
 export default async function loader({request}:LoaderFunctionArgs){
 
-    const cookieHeader = request.headers.get('Cookie');
+const cookie = request.headers.get("Cookie") ?? "";
+const apiBase = import.meta.env.VITE_API_URL;
 
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/books/`, {
-    credentials: "include",
-    headers: {
-            ...(cookieHeader ? { Cookie: cookieHeader } : {})
-    }
-  });
+const res = await fetch(`${apiBase}/api/books/`, {
+  headers: cookie ? { Cookie: cookie } : undefined,
+});
     if (res.status === 401) {
   throw new Response("Unauthorized", { status: 401 });
 }
