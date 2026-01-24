@@ -5,7 +5,7 @@ import { Link } from "react-router";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Reminder-App" },
-    { name: "description", content: "Welcome to React Router!" },
+  
   ];
 }
 
@@ -47,7 +47,7 @@ export default function Home() {
   <div className="grid grid-cols-3 mt-2 gap-6">
 
      {tiles.map((item)=> (
-      <Tile  to={item.to} img={item.img} title={item.title}/>
+      <Tile key={item.to} to={item.to} img={item.img} title={item.title}/>
 
      ))}
      
@@ -60,10 +60,5 @@ export default function Home() {
 
 
 
-
-
-  
-  
-  
 
 }
