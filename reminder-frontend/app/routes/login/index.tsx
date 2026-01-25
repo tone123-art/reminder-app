@@ -75,85 +75,86 @@ export default function LoginPage(){
 
 return (
 
-<div className="min-h-screen grid items-start justify-items-center px-4 pt-8 sm:pt-12">
-     <div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white text-black">
+<div className="min-h-screen grid place-items-center px-4">
+<div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white text-black">
    
-     {/* Choose Login or SignUp */}
-   <div className="flex items-center justify-between mb-4">
-   <h1 className="text-xl font-semibold mb-2 text-black">  {mode === "login" ? "Login" : "Create Account"}</h1>
-   <button
-        type="button"
-        onClick={() => {
+{/* Choose Login or SignUp */}
+
+<div className="flex items-center justify-between mb-4">
+<h1  className="text-xl font-semibold mb-2 text-black">  {mode === "login" ? "Login" : "Create Account"}</h1>
+<button
+      type="button"
+      onClick={() => {
             setError(null);
             setMode(m => (m === "login" ? "signup" : "login"));
-        }}
-        className="text-sm text-gray-600 hover:text-black transition"
-        >
-        {mode === "login" ? "Sign up" : "Back to login"}
-    </button>
-   </div>
+      }}
+       className="text-sm text-gray-600 hover:text-black transition"
+>
+{mode === "login" ? "Sign up" : "Back to login"}
+</button>
+</div>
 
-    {/* Login / SignUp Form */}
-    <form onSubmit={onSubmit} className="grid gap-3">
-        {mode === "signup" && (
-        <label className="grid gap-1.5">
-            <span className="text-sm  text-black font-medium">Name</span>
-            <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                disabled={loading}
-                className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
-              />
-        </label>
-        )}
-        <label className="grid gap-1.5">
-            <span className="text-sm text-black font-medium">Email</span>
-            <input
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading}
-              className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
-            />
-        </label>
-        
-        <label className="grid gap-1.5">
-            <span className="text-sm text-black font-medium">Password</span>
-            <div className="flex gap-2">
-             <input
-                type={showPw ? "text" : "password"}
-                autoComplete={mode === "login" ? "current-password" : "new-password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                disabled={loading}
-                className="flex-1 px-3 py-2 text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
-              />
-        <button
-                type="button"
-                onClick={() => setShowPw(v => !v)}
-                disabled={loading}
-                className="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-60"
-              >
-                {showPw ? "Hide" : "Show"}
-        </button>
-        </div>
-        </label>
+{/* Login / SignUp Form */}
+<form onSubmit={onSubmit} className="grid gap-3">
+{mode === "signup" && (
+<label className="grid gap-1.5">
+<span className="text-sm  text-black font-medium">Name</span>
+    <input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+        disabled={loading}
+        className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
+     />
+</label>
+)}
+<label className="grid gap-1.5">
+<span className="text-sm text-black font-medium">Email</span>
+<input
+      type="email"
+      autoComplete="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      required
+      disabled={loading}
+      className="px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
+/>
+</label>
 
-        {error && (
-            <div className="rounded-lg border border-red-300 bg-red-50 p-2.5 text-sm text-red-700">
-              {error}
-        </div>
-        )}
+<label className="grid gap-1.5">
+<span className="text-sm text-black font-medium">Password</span>
+<div className="flex gap-2">
+<input
+    type={showPw ? "text" : "password"}
+    autoComplete={mode === "login" ? "current-password" : "new-password"}
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    required
+    disabled={loading}
+    className="flex-1 px-3 py-2 text-black rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black disabled:opacity-60"
+/>
+<button
+    type="button"
+    onClick={() => setShowPw(v => !v)}
+    disabled={loading}
+    className="px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-600 hover:bg-gray-100 disabled:opacity-60"
+ >
+{showPw ? "Hide" : "Show"}
+</button>
+</div>
+</label>
 
-        <button
-            type="submit"
-            disabled={loading}
-            className="mt-2 rounded-xl border border-black bg-black py-3 font-semibold text-white hover:bg-gray-900 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+{error && (
+<div className="rounded-lg border border-red-300 bg-red-50 p-2.5 text-sm text-red-700">
+{error}
+</div>
+)}
+
+<button
+    type="submit"
+    disabled={loading}
+    className="mt-2 rounded-xl border border-black bg-black py-3 font-semibold text-white hover:bg-gray-900 disabled:cursor-not-allowed disabled:opacity-60"
+>
             {loading
               ? (mode === "login" ? "Logging in…" : "Creating account…")
               : (mode === "login" ? "Login" : "Sign up")}
@@ -162,5 +163,4 @@ return (
     </div>
      </div>
 )
-
 }
