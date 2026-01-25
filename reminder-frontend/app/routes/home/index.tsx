@@ -21,9 +21,9 @@ function Tile({to, img ,title}:TileProps) {
   return (
 
    <Link to={to}>
-   <div className="flex flex-col items-center w-80 cursor-pointer rounded-lg border border-transparent hover:border-2 hover:border-black transition active:scale-90"> 
-   <img src={img} alt={img} className="rounded-t-lg shadow-md "/> 
-   <p className="w-full text-center bg-amber-500 rounded-b- text-xl font-semibold rounded-b-lg ">{title}</p>
+   <div className="flex flex-col items-center w-full overflow-hidden cursor-pointer rounded-lg border border-transparent hover:border-black hover:border-2 transition active:scale-95"> 
+   <img src={img} alt={img} className="w-full aspect-[4/3] object-cover rounded-t-lg shadow-md"/> 
+   <p className="w-full text-center bg-amber-500 text-xl font-semibold rounded-b-lg py-2">{title}</p>
      </div>
      </Link> 
 
@@ -43,8 +43,8 @@ export default function Home() {
     { to: "movies", img: "/images/movies.avif", title: "Movies" },
   ];
   return (
-  <div className="max-w-6xl mx-auto">
-  <div className="grid grid-cols-3 mt-2 gap-6">
+  <div className="max-w-6xl mx-auto px-4">
+  <div className="grid gap-6 mt-2 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
 
      {tiles.map((item)=> (
       <Tile key={item.to} to={item.to} img={item.img} title={item.title}/>

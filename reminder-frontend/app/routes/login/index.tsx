@@ -75,7 +75,7 @@ export default function LoginPage(){
 
 return (
 
-   <div className="min-h-[70vh] grid place-items-center p-8">
+   <div className="min-h-screen grid place-items-center px-4 py-10">
    <div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white text-black">
    
      {/* Choose Login or SignUp */}
