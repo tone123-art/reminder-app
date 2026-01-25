@@ -121,7 +121,7 @@ body{
 
   .btn-edit {
     @apply 
-    rounded-md p-1 
+    rounded-md p-2
     text-slate-400 
     text-sm
     hover:text-white hover:bg-slate-700
@@ -131,7 +131,7 @@ body{
 
    .btn-delete {
     @apply 
-    rounded-md p-1 
+    rounded-md p-2 
     text-red-300 
     text-sm
     hover:text-white hover:bg-red-700

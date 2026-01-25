@@ -1,4 +1,4 @@
-import { Link, useFetcher, useNavigate, useLoaderData } from "react-router"
+import { useFetcher, useNavigate, useLoaderData } from "react-router"
 export { default as loader} from "./loader"
 export { default as action} from "./action"
 import { useState } from "react";
@@ -35,7 +35,7 @@ export default function BookPage(){
   };
 
 return (
-<div className="max-w-6xl mx-auto px-6 py-6">
+<div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
 
 
 {/* Heading of Movies list */}
