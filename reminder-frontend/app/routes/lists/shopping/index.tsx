@@ -79,12 +79,12 @@ return (
 
       
   
-      <div className="flex items-center gap-3">
-      <div className="grid grid-cols-2">
+    <div className="flex gap-2 w-full">
+
       <input
         name='name'
         defaultValue={item.name}
-        className="input-field-small w-full"
+        className="input-field-small flex-1"
         placeholder="Item"
       />
 
@@ -92,7 +92,7 @@ return (
         name='quantity'
         defaultValue={item.quantity}
         inputMode="numeric"
-        className="input-field-small w-10"
+        className="input-field-small w-16"
         placeholder="Qty"
       />
       </div>
@@ -112,7 +112,8 @@ return (
     >
       OK
     </button>
-        </div>
+
+
     </editFetcher.Form>
     )
     :
