@@ -53,7 +53,7 @@ return (
                         method="post"
                         onSubmit={()=>handleUpdate(book.book_id)}
                         >
-        <div className="list-card grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="list-card grid grid-cols-1">
         <input type="hidden" name="intent" value="update" />
         <input name="book_id" type="hidden" value={book.book_id} /> 
          
@@ -61,18 +61,18 @@ return (
         <input
         name='name'
         defaultValue={book.name}
-        className="input-field-small  lg:col-span-2"
+        className="input-field-small  w-full"
         />
          <input
         name='author'
         defaultValue={book.author}
-        className="input-field-small  lg:col-span-2"
+        className="input-field-small  w-full"
         />
 
         <select
             id="category"
             name="category"
-            className="input-field-small  lg:col-span-1"
+            className="input-field-small  w-full"
             defaultValue={book.category}
         >
         <option value="fiction">fiction</option>
@@ -86,13 +86,13 @@ return (
         <input
         name='notes'
         defaultValue={book.notes ? book.notes : ''}
-        className="input-field-small sm:col-span-2 lg:col-span-3"
+        className="input-field-small w-full"
         />
     
     {/* Update Button */}
         <button  
         type='submit'
-        className="bg-red-600 px-2 py-1 rounded-lg hover:bg-red-400 transition-transform active:scale-90 lg:col-span-1"> 
+        className="btn-add w-full sm:w-auto self-end"> 
         OK 
         </button>    
         </div>

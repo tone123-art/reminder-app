@@ -73,15 +73,18 @@ return (
                         method="post"
                         onSubmit={()=>handelUpdate(item.item_id)}
                         >
-      <div className="list-card grid grid-cols-1 gap-2 sm:grid-cols-6 items-start">
+      <div className="list-card grid grid-cols-1">
       <input type="hidden" name="intent" value="update" />
       <input name="item_id" type="hidden" value={item.item_id} /> 
-         
+
+      
+  
       <div className="flex items-center gap-3">
+      <div className="list-card grid grid-cols-2">
       <input
         name='name'
         defaultValue={item.name}
-        className="input-field-small w-full sm:col-span-4"
+        className="input-field-small w-full"
         placeholder="Item"
       />
 
@@ -89,22 +92,23 @@ return (
         name='quantity'
         defaultValue={item.quantity}
         inputMode="numeric"
-        className="input-field-small w-full sm:col-span-2 text-center"
+        className="input-field-small w-10"
         placeholder="Qty"
       />
+      </div>
       </div>
 
       <input
         name='notes'
         defaultValue={item.notes ? item.notes : ''}
-        className="input-field-small w-full sm:col-span-6"
+        className="input-field-small w-full "
         placeholder="Notes (optional)"
       />
     
     {/* Update Button */}
       <button
       type="submit"
-      className="btn-add w-full sm:w-auto sm:col-span-2 sm:justify-self-end py-2 px-3"
+      className="btn-add w-full sm:w-auto self-end"
     >
       OK
     </button>
