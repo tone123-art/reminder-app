@@ -80,7 +80,7 @@ return (
       
   
       <div className="flex items-center gap-3">
-      <div className="list-card grid grid-cols-2">
+      <div className="grid grid-cols-2">
       <input
         name='name'
         defaultValue={item.name}
