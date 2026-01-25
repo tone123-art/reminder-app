@@ -51,7 +51,7 @@ return (
                         onSubmit={()=>handleUpdate(movie.movie_id)}
                      
                         >
-        <div className="list-card grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-12 items-start">
+        <div className="list-card grid grid-cols-1 gap-2">
         <input type="hidden" name="intent" value="update" />
         <input name="movie_id" type="hidden" value={movie.movie_id} /> 
          
