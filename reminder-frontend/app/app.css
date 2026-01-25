@@ -44,6 +44,7 @@ body{
     @apply
     bg-white 
     text-black 
+    min-h-[2.5rem]
     w-full px-4 py-2 rounded-lg
     focus:border-2 focus:border-orange-500 focus:outline-none 
     transition
@@ -53,6 +54,7 @@ body{
     @apply
     bg-white 
     text-black 
+    min-h-[2.5rem]
     w-full px-2 py-1 rounded-md mb-2
     focus:border-2 focus:border-orange-500 focus:outline-none 
     transition

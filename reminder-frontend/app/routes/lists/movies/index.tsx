@@ -74,20 +74,19 @@ return (
        
           </select>
 
-    
-      
 
         <input
         name='notes'
         defaultValue={movie.notes ? movie.notes : ''}
-        className="input-field-small w-full sm:col-span-2 lg:col-span-3"
+        className="input-field-small w-full sm:col-span-2lg:col-span-9 lg:col-start-1"
         placeholder="Notes (optional)"
         />
 
            {/* Update Button */}
         <button  
         type='submit'
-        className="btn-add w-full sm:w-auto lg:col-span-1 py-2 px-3"> 
+         className="btn-add w-full sm:w-auto lg:col-span-3 lg:col-start-10 py-2 px-3"
+> 
         OK 
         </button>  
         </div>
