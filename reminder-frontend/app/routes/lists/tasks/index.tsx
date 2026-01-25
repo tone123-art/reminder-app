@@ -31,11 +31,11 @@ export default function Tasklist(){
   const lastSubmission = useRef<any>(null)
   useEffect(() => {
     if (fetcher.state === "idle" && fetcher.data && editingId !== null) {
-        lastSubmission.current=fetcher.data,
+        lastSubmission.current=fetcher.data;
         setEditingId(null);
          revalidator.revalidate(); 
    }
-   }, [fetcher.state, fetcher.data, revalidator]);
+   }, [fetcher.state,editingId, fetcher.data, revalidator]);
 
     // Handle Completion: 
   useEffect(() => {
@@ -85,7 +85,7 @@ const visibleTasks = useMemo(
 
   
 return (
-<div className="max-w-6xl mx-auto px-6 py-6">
+<div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
  
  {/* Heading of the List */}
  <ListHeading heading={'To Do List'} link={'/post/tasks'} btnName={'+ Add Task'}/>
@@ -97,85 +97,64 @@ return (
   
   
   {/* Filter / Sort Bar */}
-  <div className="mb-4 flex gap-4">
+<div className="mb-4 flex flex-wrap items-center gap-2 sm:gap-4">
 
-    <div className="flex items-center gap-2">
-         <button className={`${displayType === 'active' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setDisplayType('active')}> active</button>
-        <button className={`${displayType === 'completed' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setDisplayType('completed')}> done</button>
-        <button className={`${displayType === 'all' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setDisplayType('all')}> all</button>
+<div className="flex flex-wrap items-center gap-2">
+    <button className={`${displayType === 'active' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setDisplayType('active')}> active</button>
+    <button className={`${displayType === 'completed' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setDisplayType('completed')}> done</button>
+    <button className={`${displayType === 'all' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setDisplayType('all')}> all</button>
+</div>
 
-    </div>
-    <button 
-        className="btn-toggle ml-6"
-        onClick={() => setSortOrder(o => o === "asc" ? "desc" : "asc")}>
-        {sortOrder === "asc" ? "↑ Asc" : "↓ Desc"}
-      </button>
+{/* sort order */}
+<button 
+    className="btn-toggle sm:ml-2"
+    onClick={() => setSortOrder(o => o === "asc" ? "desc" : "asc")}>
+    {sortOrder === "asc" ? "↑ Asc" : "↓ Desc"}
+</button>
          
        
-       <div className="relative">
-       <button 
-       onClick={()=>setOpen((v)=>!v)}
-       className="btn-toggle flex items-center gap-2">  <SlidersHorizontal size={16}/> Filter 
-       </button>
+{/* sort key dropdown */}
+<div className="relative sm:ml-auto">
+<button 
+      onClick={()=>setOpen((v)=>!v)}
+      className="btn-toggle flex items-center gap-2">  <SlidersHorizontal size={16}/> Filter 
+</button>
 
-       { open ?  (
-        <div
-        className="
-        absolute
-        top-full right-0 mt-1
-        z-50
-        rounded-lg
-        list-container px-1 py-1
-      
-        ">        
-            <button className="" onClick={()=> setSortKey('created_at')}>created</button>
-            <button className="" onClick={()=> setSortKey('deadline')}>deadline</button>
-            <button className="" onClick={()=> setSortKey('priority')}>priority</button>
-           
-    
-        </div>
+{ open ?  (
+<div className="absolute top-full right-0 mt-2 z-50 w-44 rounded-lg border border-slate-700 bg-slate-800 shadow-lg p-1">    
+  <button type="button" className="w-full text-left px-3 py-2 rounded hover:bg-white/10" onClick={()=> setSortKey('created_at')}>created</button>
+  <button type="button" className="w-full text-left px-3 py-2 rounded hover:bg-white/10" onClick={()=> setSortKey('deadline')}>deadline</button>
+  <button type="button" className="w-full text-left px-3 py-2 rounded hover:bg-white/10" onClick={()=> setSortKey('priority')}>priority</button> 
+</div>
+ ) : null}
+</div>
+</div>
 
-
-
-       ) : null}
-       </div>
-      
-     
-   
-  </div>
-       
-  
-  
-  
-  {/* To Do List Items */}
-    {visibleTasks.map((task => {
-
-      const isEditing = editingId ===task.task_id;
-      const deadlineForInput =  task.deadline ? task.deadline.slice(0, 10) : "";
+{/* To Do List Items */}
+{visibleTasks.map((task => {
+    const isEditing = editingId ===task.task_id;
+    const deadlineForInput =  task.deadline ? task.deadline.slice(0, 10) : "";
           
-  return  (      
-  <div 
+return  (      
+<div 
     key={task.task_id}
     className={`list-card ${task.completed ? 'opacity-50' :''}`}> 
-     <div className="flex items-center gap-8">
+<div className="flex items-start gap-3 sm:gap-6">
       
       {/* Checkmark Button  Toggle Completion*/}
 
-     <toggleFetcher.Form  method="POST"> 
-      <input type="hidden" name='intent' value='toggle' />
-      <input type="hidden" name="completed" value={String(!task.completed)} />
-      <input type="hidden" name="task_id" value={String(task.task_id)} />
-      <button
-        type="submit"
-        aria-label="Toggle completed"
-        className={`w-12 h-12 rounded-full ${priorityBg(task.priority)} shadow-md cursor-pointer
-                  hover:border-2 hover:border-black 
-                  active:scale-[0.95] transition duration-150 ease-out
-                  flex items-center justify-center
-                  ${task.completed ? "border-teal-500" : "border-black"}
-                  transition
-                  `}
-                   >
+<toggleFetcher.Form  method="POST"> 
+<input type="hidden" name='intent' value='toggle' />
+<input type="hidden" name="completed" value={String(!task.completed)} />
+<input type="hidden" name="task_id" value={String(task.task_id)} />
+<button
+    type="submit"
+    aria-label="Toggle completed"
+    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${priorityBg(task.priority)} shadow-md cursor-pointer
+                hover:border-2 hover:border-black active:scale-[0.95]
+                flex items-center justify-center
+${task.completed ? "border-teal-500" : "border-black"}`}
+>
       {task.completed &&(
         <svg
             viewBox="0 0 20 20"
@@ -241,52 +220,57 @@ return (
     // Editing ends here
    )    
    : ( <>
-               <h2 className="text-lg font-semibold"> {task.name}</h2>
+    
+    <h2 className="text-lg font-semibold"> {task.name}</h2>
 
-                {/*  Deadline Date */}
-               { task.deadline && (
-               <div className="flex items-center gap-1"> 
-               <AlarmClock className="w-3 h-3" /> 
-               <span> Due: </span> 
-               <span> {formatDateOnly(task.deadline)}   </span>  
-               </div>
-                )}  
-                  
-                  
-                  
-                  </>  )}
-
-               {/* Task Createt */}
-              <div className="flex items-center gap-1">
-              <ClockPlus size={12} />
-              <span> Created:{formatDateOnly(task.created_at)}
-              </span>
-              </div>
-              {task.completed && (   <div className="flex items-center gap-1">
-                  <ClipboardCheck size={12} />
-              <span> Completed:{formatDateOnly(task.completed_at)}
-              </span>
-              </div>
-              )}
-                    {/* Edit Button */}
-                  <button 
-                  onClick={()=>setEditingId(task.task_id)}
-                  className="btn-edit"> <Pencil size={16}/></button>  
-
-                    {/* Delete Button */}
-                  <button 
-                  onClick={()=>handleDeleteTask(task.task_id)}
-                  className="btn-delete">  <Trash2 size={16}/></button>  
-
-           
-              </div>
-              </div>
-              
-  </div>  )}
+  
+    
+    <div className="mt-2 flex flex-col gap-1 text-sm text-slate-300">
+    { task.deadline && (
+    <div className="flex flex-wrap items-center gap-1">               
+    <AlarmClock className="w-3 h-3" /> 
+    <span> Due: </span> 
+    <span> {formatDateOnly(task.deadline)}   </span>  
+    </div>
+    )}  
  
-           
-            )) } </div>
-        
-      </div>
-   )
-  }
+  {/* Task Createt */}
+  <div className="flex flex-wrap items-center gap-1">
+  <ClockPlus size={12} />
+  <span> Created:{formatDateOnly(task.created_at)}
+  </span>
+  </div>
+  
+  {task.completed && (   
+  <div className="flex flex-wrap items-center gap-1">
+  <ClipboardCheck size={12} />
+  <span> Completed:{formatDateOnly(task.completed_at)}
+  </span>
+  </div>
+  )}
+  </div>
+              
+  {/* Edit Button */}
+  <div className="mt-3 flex justify-end gap-2">
+
+  <button 
+      onClick={()=>setEditingId(task.task_id)}
+      className="btn-edit"> 
+      <Pencil size={16}/>
+  </button>  
+
+  {/* Delete Button */}
+  <button 
+      onClick={()=>handleDeleteTask(task.task_id)}
+      className="btn-delete">  <Trash2 size={16}/></button>  
+ </div>
+                           
+  </> )}
+          
+  </div>
+  </div>
+  </div>
+)}))}
+</div>
+  </div>
+)}

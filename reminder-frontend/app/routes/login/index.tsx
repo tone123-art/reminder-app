@@ -75,8 +75,8 @@ export default function LoginPage(){
 
 return (
 
-   <div className="min-h-screen grid place-items-center px-4 py-10">
-   <div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white text-black">
+<div className="min-h-screen grid items-start justify-items-center px-4 pt-8 sm:pt-12">
+     <div className="w-full max-w-sm md:max-w-md lg:max-w-lg border border-gray-700 rounded-xl p-5 bg-white text-black">
    
      {/* Choose Login or SignUp */}
    <div className="flex items-center justify-between mb-4">

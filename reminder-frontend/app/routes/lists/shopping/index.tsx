@@ -18,7 +18,7 @@ export default function ShoppingPage(){
   const { shopping_items}  = useLoaderData() as LoaderData;
 
   const filtered_shopping_items = filterBy 
-    ?  shopping_items.filter((item)=>item.store_type === filterBy)
+    ? shopping_items.filter((item)=>item.store_type === filterBy)
     : shopping_items;
 
   // Handle Update of Shopping Item
@@ -29,19 +29,19 @@ export default function ShoppingPage(){
   // Handle Delete of Shopping Items
   async function handleDeleteItem(item_id: number) {
   const res = await fetch(`${import.meta.env.VITE_API_URL}/api/shopping/items/${item_id}`, {
-    method: "DELETE",
-    credentials: "include",
-    });
-  if (!res.ok) {
-    alert("Failed to delete Item");
-    return;
+      method: "DELETE",
+      credentials: "include",
+  });
+    if (!res.ok) {
+      alert("Failed to delete Item");
+      return;
   } 
   navigate("/shopping");
   };
 
 
 return (
-<div className="max-w-6xl mx-auto px-6 py-6">
+<div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
 
 {/* Heading of Shopping list */}
 <ListHeading heading="Shoppinglist" btnName="+ Add Item" link="/post/shopping" />
@@ -54,11 +54,11 @@ return (
 <div className="list-container">
 
 {/* Toggle Bar */}
-<div className="flex items-center gap-4 mb-4">
-        <button className={`${filterBy === null ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy(null)}> all</button>
-        <button className={`${filterBy === 'supermarket' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy('supermarket')}> supermarket</button>
-        <button className={`${filterBy === 'online' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy('online')}> online</button>
-        <button className={`${filterBy === 'store' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy('store')}> store</button> 
+<div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4">
+    <button className={`${filterBy === null ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy(null)}> all</button>
+    <button className={`${filterBy === 'supermarket' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy('supermarket')}> supermarket</button>
+    <button className={`${filterBy === 'online' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy('online')}> online</button>
+    <button className={`${filterBy === 'store' ? `btn-toggle-selected` : 'btn-toggle'}`} onClick={()=>setfilterBy('store')}> store</button> 
 </div>
 
 
@@ -73,36 +73,41 @@ return (
                         method="post"
                         onSubmit={()=>handelUpdate(item.item_id)}
                         >
-        <div className="list-card">
-        <input type="hidden" name="intent" value="update" />
-        <input name="item_id" type="hidden" value={item.item_id} /> 
+      <div className="list-card grid grid-cols-1 gap-2 sm:grid-cols-6 items-start">
+      <input type="hidden" name="intent" value="update" />
+      <input name="item_id" type="hidden" value={item.item_id} /> 
          
-        <div className="flex items-center gap-3">
-        <input
+      <div className="flex items-center gap-3">
+      <input
         name='name'
         defaultValue={item.name}
-        className="input-field-small w-full"
-        />
+        className="input-field-small w-full sm:col-span-4"
+        placeholder="Item"
+      />
 
-         <input
+      <input
         name='quantity'
         defaultValue={item.quantity}
-        className="input-field-small w-8 text-center"
-        />
-        </div>
+        inputMode="numeric"
+        className="input-field-small w-full sm:col-span-2 text-center"
+        placeholder="Qty"
+      />
+      </div>
 
-        <input
+      <input
         name='notes'
         defaultValue={item.notes ? item.notes : ''}
-        className="input-field-small"
-        />
+        className="input-field-small w-full sm:col-span-6"
+        placeholder="Notes (optional)"
+      />
     
     {/* Update Button */}
-        <button  
-        type='submit'
-        className="btn-add py-1 px-2"> 
-        OK 
-        </button>    
+      <button
+      type="submit"
+      className="btn-add w-full sm:w-auto sm:col-span-2 sm:justify-self-end py-2 px-3"
+    >
+      OK
+    </button>
         </div>
     </editFetcher.Form>
     )
@@ -120,17 +125,23 @@ return (
     {item.notes ? ( <p className="notes">{item.notes}</p>
     ) 
     : null}
-    <div className="flex">
-        <button 
-              onClick={()=> setEditingId(item.item_id)}
-              className="btn-edit"> <Pencil size={16}  /></button>
-        <button 
-                onClick={()=>handleDeleteItem(item.item_id)}
-                className="btn-delete"> 
-                <Trash2 size={16} />
-        </button>
-      </div>
-      </div> )
+     
+     
+  <div className="flex justify-end gap-2">
+  
+    <button 
+        onClick={()=> setEditingId(item.item_id)}
+        className="btn-edit"> 
+        <Pencil size={16}  />
+    </button>
+    <button 
+        onClick={()=>handleDeleteItem(item.item_id)}
+        className="btn-delete"> 
+        <Trash2 size={16} />
+    </button>
+    </div>
+      
+    </div> )
           ))
         )}
       </div>
