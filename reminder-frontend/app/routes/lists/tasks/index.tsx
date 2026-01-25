@@ -35,7 +35,7 @@ export default function Tasklist(){
         setEditingId(null);
          revalidator.revalidate(); 
    }
-   }, [fetcher.state,editingId, fetcher.data, revalidator]);
+   }, [fetcher.state, fetcher.data, revalidator]);
 
     // Handle Completion: 
   useEffect(() => {
