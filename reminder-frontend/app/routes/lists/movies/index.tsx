@@ -51,6 +51,7 @@ return (
                         onSubmit={()=>handleUpdate(movie.movie_id)}
                      
                         >
+        <div className="w-full max-w-xl md:max-w-2xl">
         <div className="list-card grid grid-cols-1 gap-2">
         <input type="hidden" name="intent" value="update" />
         <input name="movie_id" type="hidden" value={movie.movie_id} /> 
@@ -58,14 +59,14 @@ return (
         <input
         name='name'
         defaultValue={movie.name}
-        className="input-field-small w-full lg:col-span-5"
+      className="input-field-small w-full"
         placeholder="Movie name"
         />
 
         <select
             id="availability"
             name="availability"
-            className="input-field-small w-full lg:col-span-3"
+      className="input-field-small w-full"
             defaultValue={movie.availability}
         >
         <option value="streaming">streaming</option>
@@ -78,18 +79,20 @@ return (
         <input
         name='notes'
         defaultValue={movie.notes ? movie.notes : ''}
-        className="input-field-small w-full sm:col-span-2lg:col-span-9 lg:col-start-1"
+      className="input-field-small w-full"
         placeholder="Notes (optional)"
         />
 
            {/* Update Button */}
         <button  
         type='submit'
-         className="btn-add w-full sm:w-auto lg:col-span-3 lg:col-start-10 py-2 px-3"
+         className="btn-add w-full sm:w-auto self-end"
 > 
         OK 
         </button>  
         </div>
+                </div>
+
     
  
     </editFetcher.Form>
