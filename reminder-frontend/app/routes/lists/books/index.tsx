@@ -53,7 +53,7 @@ return (
                         method="post"
                         onSubmit={()=>handleUpdate(book.book_id)}
                         >
-        <div className="list-card">
+        <div className="list-card grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-6">
         <input type="hidden" name="intent" value="update" />
         <input name="book_id" type="hidden" value={book.book_id} /> 
          
@@ -61,18 +61,18 @@ return (
         <input
         name='name'
         defaultValue={book.name}
-        className="input-field-small"
+        className="input-field-small  lg:col-span-2"
         />
          <input
         name='author'
         defaultValue={book.author}
-        className="input-field-small"
+        className="input-field-small  lg:col-span-2"
         />
 
         <select
             id="category"
             name="category"
-            className="input-field-small"
+            className="input-field-small  lg:col-span-1"
             defaultValue={book.category}
         >
         <option value="fiction">fiction</option>
@@ -86,13 +86,13 @@ return (
         <input
         name='notes'
         defaultValue={book.notes ? book.notes : ''}
-        className="input-field-small"
+        className="input-field-small sm:col-span-2 lg:col-span-3"
         />
     
     {/* Update Button */}
         <button  
         type='submit'
-        className="bg-red-600 px-2 py-1 rounded-lg hover:bg-red-400 transition-transform active:scale-90"> 
+        className="bg-red-600 px-2 py-1 rounded-lg hover:bg-red-400 transition-transform active:scale-90 lg:col-span-1"> 
         OK 
         </button>    
         </div>
@@ -102,22 +102,24 @@ return (
     (
         <div
         key={book.book_id}
-        className="list-card"
+        className="list-card "
         >
-        <div className="flex items-center gap-3">
-        <p>{book.name} {book.author ? `by ${book.author}`: ''}</p>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+         <p className="min-w-0 break-words sm:truncate">
+          {book.name} {book.author ? `by ${book.author}`: ''}
+        </p>
          
             
-             <span className="rounded-lg bg-slate-700 px-1 py-1 text-sm text-slate-300 ml-auto">
-                  {book.category}
-            </span>
+             <span className="self-start sm:self-auto sm:ml-auto rounded-lg bg-slate-700 px-2 py-1 text-xs sm:text-sm text-slate-300">
+    {book.category}
+  </span>
         
             </div>
         {book.notes ? (
             <p className="notes">{book.notes}</p>
         ) 
         : null}
-        
+        <div className="mt-2 flex justify-end gap-2">
             <button 
               onClick={()=> setEditingId(book.book_id)}
               className="btn-edit"> <Pencil size={16} /></button>
@@ -126,7 +128,7 @@ return (
                 onClick={()=>handleDeleteBook(book.book_id)}
                 className="btn-delete"> <Trash2 size={16}/>
             </button>
-              </div>
+              </div></div>
           )
           ))
         )}
