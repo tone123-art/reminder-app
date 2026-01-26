@@ -17,8 +17,11 @@ declare global {
 
 export async function requireUser(req: Request, res: Response, next: NextFunction) {
   try {
-        console.log("requireUser HIT:", req.method, req.originalUrl);
+    console.log("requireUser HIT:", req.method, req.originalUrl);
     console.log("cookies:", req.cookies);
+    console.log("origin", req.headers.origin);
+    console.log("referer", req.headers.referer);
+    console.log("ua", req.headers["user-agent"]);
 
     const sessionId = req.cookies?.session;
     if (!sessionId) return res.status(401).json({ error: "Not authenticated" });
