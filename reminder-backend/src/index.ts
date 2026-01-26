@@ -10,9 +10,12 @@ import moviesRouter from "./routes/movies.js"
 import booksRouter from "./routes/books.js"
 
 
-const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:5200";
+const allowedOrigin = process.env.CORS_ORIGIN;
 
 const app = express();
+
+app.set("trust proxy", 1);
+
 app.use(cors({
   origin: allowedOrigin,
   credentials: true,

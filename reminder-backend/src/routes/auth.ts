@@ -46,12 +46,14 @@ router.post("/login", async (req, res) => {
   );
 
   // 5. Set cookie
-  res.cookie("session", sessionId, {
-    httpOnly: true,
-    sameSite: isProd ? "none": "lax",
-    secure: isProd, // true in production (HTTPS)
-    expires: expiresAt
-  });
+res.cookie("session", sessionId, {
+  httpOnly: true,
+  secure: true,                 
+  sameSite: "lax",              
+  domain: ".reminderapp.org", 
+  path: "/",
+  maxAge: 1000 * 60 * 60 * 24 * 14,
+});
 
   return res.json({ ok: true });
 });
