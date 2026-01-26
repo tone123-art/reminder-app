@@ -15,26 +15,36 @@ const app = express();
 
 app.set("trust proxy", 1);
 
-const allowedOrigins = [
+const allowedOrigins = new Set([
   "https://app.reminderapp.org",
-  // optional: keep old domain for debugging during migration
+  // Optional: keep old Vercel domain during migration/debug
   "https://reminder-app-eight-mauve.vercel.app",
-];
+]);
 
-app.use(cors({
-  origin: (origin, cb) => {
-    // allow server-to-server / curl where origin is undefined
-    if (!origin) return cb(null, true);
-    if (allowedOrigins.includes(origin)) return cb(null, true);
-    return cb(new Error("Not allowed by CORS"));
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
 
-// IMPORTANT: respond to preflight
-app.options("*", cors());
+
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      // SSR / curl / server-to-server often has no Origin header
+      if (!origin) return cb(null, true);
+
+      if (allowedOrigins.has(origin)) return cb(null, true);
+
+      console.log("CORS blocked origin:", origin);
+      return cb(null, false);
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// handles preflight in Express 5
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
 
 
 
@@ -51,6 +61,11 @@ app.use("/api/shopping", shoppingRouter);
 app.use("/api/movies", moviesRouter);
 app.use("/api/books", booksRouter);
 app.use("/api/calendar", calendarRouter);
+
+
+app.get("/api/health", (_req, res) => {
+  res.json({ ok: true });
+});
 
 
 const port = Number(process.env.PORT) || 4500;

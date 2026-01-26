@@ -6,7 +6,16 @@ import crypto from "crypto";
 
 const router = Router();
 
-const isProd = process.env.NODE_ENV === "production";
+const COOKIE_NAME = "session";
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: true,              
+  sameSite: "lax" as const,
+  domain: ".reminderapp.org",
+  path: "/",
+  maxAge: 1000 * 60 * 60 * 24 * 14,
+};
 
 
 // login route
@@ -46,14 +55,7 @@ router.post("/login", async (req, res) => {
   );
 
   // 5. Set cookie
-res.cookie("session", sessionId, {
-  httpOnly: true,
-  secure: true,                 
-  sameSite: "lax",              
-  domain: ".reminderapp.org", 
-  path: "/",
-  maxAge: 1000 * 60 * 60 * 24 * 14,
-});
+res.cookie(COOKIE_NAME, sessionId, cookieOptions);
 
   return res.json({ ok: true });
 });
@@ -89,11 +91,7 @@ router.post("/logout", async (req, res) => {
     await pool.query("DELETE FROM sessions WHERE session_id = $1", [sessionId]);
   }
 
-res.clearCookie("session", {
-  httpOnly: true,
-  sameSite: isProd ? "none" : "lax",
-  secure: isProd
-});
+res.clearCookie(COOKIE_NAME, { domain: ".reminderapp.org", path: "/" });
 
 
 
@@ -146,12 +144,8 @@ router.post("/signup", async (req, res) => {
       [sessionId, user.id, expiresAt]
     );
 
-    res.cookie("session", sessionId, {
-      httpOnly: true,
-      sameSite: isProd ? "none" : "lax",
-      secure: isProd, // true in production
-      expires: expiresAt
-    });
+   res.cookie(COOKIE_NAME, sessionId, cookieOptions);
+
 
     return res.status(201).json({ ok: true, user });
   } catch (err) {
