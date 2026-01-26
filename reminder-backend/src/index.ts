@@ -10,16 +10,31 @@ import moviesRouter from "./routes/movies.js"
 import booksRouter from "./routes/books.js"
 
 
-const allowedOrigin = process.env.CORS_ORIGIN;
 
 const app = express();
 
 app.set("trust proxy", 1);
 
+const allowedOrigins = [
+  "https://app.reminderapp.org",
+  // optional: keep old domain for debugging during migration
+  "https://reminder-app-eight-mauve.vercel.app",
+];
+
 app.use(cors({
-  origin: allowedOrigin,
+  origin: (origin, cb) => {
+    // allow server-to-server / curl where origin is undefined
+    if (!origin) return cb(null, true);
+    if (allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(new Error("Not allowed by CORS"));
+  },
   credentials: true,
+  methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
+// IMPORTANT: respond to preflight
+app.options("*", cors());
 
 
 
