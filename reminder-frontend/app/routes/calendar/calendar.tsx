@@ -34,15 +34,15 @@ export default function CalendarPage(){
     };
 
   return(
-    <div className="max-w-4xl mx-auto px-4 py-6">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
     <div className="relative flex items-center mb-3">
-        <h1 className="absolute left-1/2 -translate-x-1/2 text-2xl font-bold mx-auto">Calendar</h1>
+        <h1 className=" headline sm:absolute sm:left-1/2 sm:-translate-x-1/2">Calendar</h1>
         <button
         type="button"
         onClick={() => setShowForm(true)}
-        className="ml-auto px-4 py-2 rounded-2xl bg-black font-semibold hover:opacity-90 transition"
+        className="btn-add ml-auto"
     >
-      + New appointment
+      New Appointment
     </button>
     </div>
 
@@ -62,14 +62,18 @@ export default function CalendarPage(){
   <FullCalendar 
     plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin]}
     initialView="dayGridMonth"
-    headerToolbar={{ left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" }}
+    headerToolbar={
+   
+    
+       { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" }
+  }
     timeZone="local"
     events={events}
     selectable
     eventContent={(arg) => (
     <div className="fc-event-custom w-full bg-blue-900 px-2 hover:bg-blue-800">
-         <div className="text-[12px] font-semibold leading-tight">{arg.event.title}</div>
-        <div className="text-[11px] leading-tight">{arg.timeText}</div>
+         <div className="leading-tight">{arg.event.title}</div>
+        <div className="leading-tight">{arg.timeText}</div>
     </div>
     )}     
     eventClick={(info) => onEventClick(Number(info.event.id))}

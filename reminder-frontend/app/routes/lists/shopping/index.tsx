@@ -1,10 +1,10 @@
-import { Link, useFetcher, useLoaderData, useNavigate } from "react-router"
+import { useFetcher, useLoaderData, useNavigate } from "react-router"
 export { default as loader} from "./loader"
 export { default as action} from "./action"
 import type { LoaderData} from "~/lib/types/shopping"
 import { useState } from "react"
-import { Trash2 , Pencil} from "lucide-react"
 import ListHeading from "../listUtils/listHeading"
+import ActionButtons from "../listUtils/actionButtons"
 
 
 export default function ShoppingPage(){
@@ -44,7 +44,7 @@ return (
 <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
 
 {/* Heading of Shopping list */}
-<ListHeading heading="Shoppinglist" btnName="+ Add Item" link="/post/shopping" />
+<ListHeading heading="Shoppinglist" btnName="Add Item" link="/post/shopping" />
 
 
 
@@ -79,7 +79,7 @@ return (
 
       
   
-    <div className="flex gap-2 w-full">
+    <div className="flex w-full gap-2">
 
       <input
         name='name'
@@ -95,7 +95,7 @@ return (
         className="input-field-small w-16"
         placeholder="Qty"
       />
-      </div>
+      
       </div>
 
       <input
@@ -108,11 +108,11 @@ return (
     {/* Update Button */}
       <button
       type="submit"
-      className="btn-add w-full sm:w-auto self-end"
+      className="btn-add w-full"
     >
       OK
     </button>
-
+</div>
 
     </editFetcher.Form>
     )
@@ -123,7 +123,7 @@ return (
   key={item.item_id}
   className="list-card"
   >
-  <p className=""> 
+  <p > 
     {item.quantity} x {item.name}
   </p>
    
@@ -131,20 +131,10 @@ return (
     ) 
     : null}
      
+
+     <ActionButtons setEditingId={setEditingId} handleDelete={handleDeleteItem} id={item.item_id} />
      
-  <div className="flex justify-end gap-2">
   
-    <button 
-        onClick={()=> setEditingId(item.item_id)}
-        className="btn-edit"> 
-        <Pencil size={16}  />
-    </button>
-    <button 
-        onClick={()=>handleDeleteItem(item.item_id)}
-        className="btn-delete"> 
-        <Trash2 size={16} />
-    </button>
-    </div>
       
     </div> )
           ))

@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* (no prefix)  → phones
+sm:          → ≥ 640px
+md:          → ≥ 768px
+lg:          → ≥ 1024px
+xl:          → ≥ 1280px */
+
 @layer base{
 html,
 body {
@@ -19,155 +25,219 @@ body{
 .list-container {
     @apply 
     bg-slate-800 
-    p-6 rounded-2xl shadow-lg   
+    p-4 rounded-2xl shadow-lg   
     border border-slate-700
-  }
-
+    
+    sm:p-6
+    md:p-8;
+}
 
 .list-card {
     @apply 
     bg-slate-900/50 
-    px-6 py-4 rounded-2xl shadow-lg 
-    text-lg text-slate-100
+    px-3 py-2 rounded-xl shadow-lg 
+    text-sm text-slate-100
     border border-slate-700/50
-    mb-2;
-  }
+    mb-2
+
+    sm:px-4 sm:py-3 sm:text-base rounded-2xl
+    md:px-6 md:py-4 md:text-lg rounded-2xl;
+}
  
   .input-label {
     @apply 
     block 
-    font-medium text-xl 
+    text-sm 
+    font-medium
     mb-1
+
+    sm:text-base
+    md:text-lg;
   }
 
   .input-field {
     @apply
     bg-white 
     text-black 
+    text-sm
     min-h-[2.5rem]
-    w-full px-4 py-2 rounded-lg
+    w-full px-2 py-2 rounded-lg
     focus:border-2 focus:border-orange-500 focus:outline-none 
     transition
+
+    sm:text-base
+    md:text-lg;
   }
 
    .input-field-small {
     @apply
     bg-white 
     text-black 
-    min-h-[2.5rem]
+    text-sm
+    min-h-[2rem]
     w-full px-2 py-1 rounded-md mb-2
     focus:border-2 focus:border-orange-500 focus:outline-none 
     transition
+
+    sm:text-base sm:min-h-[2.5rem]
+    md:text-lg md:min-h-[2.5rem];
   }
 
   .message-success {
     @apply   
     bg-green-700   
     rounded-lg  mb-6 py-4  shadow-md
-    text-base
+    text-sm
     text-white text-center 
     border border-green-500 
+
+    sm:text-base
+    md:text-lg;
   }
 
   .message-fail {
     @apply 
     bg-red-700 
     rounded-lg mb-4 py-2 shadow-md
-    text-base
+    text-sm
     text-white text-center 
     border border-red-500  
+
+    sm:text-base
+    md:text-lg;
   }
 
 
   .headline {
     @apply 
     text-white
-    text-2xl font-semibold 
+    text-lg font-semibold
+    sm:text-xl
+    md:text-2xl;
+
+
+  }
+
+  .headline-small {
+    @apply 
+    text-white
+    text-base font-semibold
+    sm:text-lg
+    md:text-xl;
+
+
   }
 
   .notes {
     @apply
-    text-sm text-slate-300
+    text-xs text-slate-300
+    whitespace-pre-wrap break-words
+
+    sm:text-sm
+    md:text-base;
   }
 
   .btn-add { 
     @apply  
     bg-emerald-600
-    rounded-lg  px-4 py-2 
-    text-base font-semibold text-white 
+    rounded-lg  px-3 py-2
+    text-sm font-semibold text-white 
     hover:bg-emerald-500
     cursor-pointer 
     transition
     active:scale-90 active:bg-emerald-600
+
+    sm:text-base
+    md:text-lg;
   }
 
   .btn-toggle { 
     @apply
     bg-slate-700 
-    rounded-lg px-2 py-2
-    text-base font-semibold text-slate-100
+    rounded-lg px-3 py-2
+    text-sm font-semibold text-slate-100
     cursor-pointer 
     transition
     hover:bg-slate-600
+
+    sm:text-base
+    md:text-lg;
   }
 
   .btn-toggle-selected { 
     @apply
     bg-emerald-600 
-    rounded-lg px-2 py-2
-    text-base font-semibold text-white
+    rounded-md
+    px-3 py-2
+    text-sm font-semibold text-white
     cursor-pointer 
     transition
+
+    sm:text-base
+    md:text-lg;
    
   }
 
   .btn-edit {
     @apply 
-    rounded-md p-2
+    rounded-md 
+    px-3 py-2
     text-slate-400 
     text-sm
     hover:text-white hover:bg-slate-700
     transition
     active:scale-90
+
+    sm:text-base
+    md:text-lg;
   }
 
    .btn-delete {
     @apply 
-    rounded-md p-2 
+    rounded-md 
+    px-3 py-2
     text-red-300 
     text-sm
     hover:text-white hover:bg-red-700
     transition
     active:scale-90
+
+    sm:text-base
+    md:text-lg;
   }
 
     .btn-cancel {
     @apply  
     bg-red-600
-    rounded-lg  px-4 py-2 
-    text-base font-semibold text-white 
+    rounded-lg  px-3 py-2
+    text-sm font-semibold text-white 
     hover:bg-red-500
     cursor-pointer 
     transition
     active:scale-90 active:bg-red-600
+
+    sm:text-base
+    md:text-lg;
   }
 
+  /* FullCalendar mobile toolbar improvements */
+.fc .fc-toolbar {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.fc .fc-toolbar-title {
+  font-size: 1rem; /* smaller title */
+  line-height: 1.25rem;
+}
+
+.fc .fc-button {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
 
 
-  
-
- 
-  
 }
 
 
 
-
-/* text-xs     ~12px
-text-sm     ~14px
-text-base   ~16px  (default)
-text-lg     ~18px
-text-xl     ~20px
-text-2xl    ~24px
-text-3xl    ~30px
-text-4xl    ~36px */

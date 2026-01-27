@@ -3,8 +3,8 @@ export { default as loader} from "./loader"
 export { default as action} from "./action"
 import { useState } from "react";
 import type { LoaderData } from "~/lib/types/movies";
-import { Pencil, Trash2 } from "lucide-react";
 import ListHeading from "../listUtils/listHeading";
+import ActionButtons from "../listUtils/actionButtons";
 
 export default function MoviePage(){
 
@@ -36,7 +36,7 @@ return (
 <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
 
 {/* Heading of Movies list */}
-<ListHeading heading={'Movies to Watch'} btnName={'+ Add Movie'} link={'/post/movies'} />
+<ListHeading heading={'Watchlist'} btnName={'Add Movie'} link={'/post/movies'} />
 
 {/* Movies List */}
 <div className="list-container">
@@ -103,11 +103,11 @@ return (
     key={movie.movie_id}
     className="list-card"
   >
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-  <p className="min-w-0 break-words sm:truncate">
+    <div className="flex flex-row gap-2 sm:gap-3">
+  <p className="min-w-0 break-words truncate">
     {movie.name}  
   </p>
-   <span className="self-start sm:self-auto sm:ml-auto rounded-lg bg-slate-700 px-2 py-1 text-xs sm:text-sm text-slate-300">
+   <span className="self-start sm:self-auto ml-auto rounded-lg bg-slate-700 px-2 py-1 text-xs sm:text-sm text-slate-300">
     {movie.availability}
   </span>
  
@@ -119,16 +119,8 @@ return (
         : null}
 
  
-    
-   <div className="mt-3 flex justify-end gap-2">
-            <button 
-              onClick={()=> setEditingId(movie.movie_id)}
-              className="btn-edit"> <Pencil size={16}/></button>
-                  <button 
-                onClick={()=>handleDeleteMovie(movie.movie_id)}
-                className="btn-delete"> <Trash2 size={16}/>
-            </button>
-    </div>
+    <ActionButtons setEditingId={setEditingId} handleDelete={handleDeleteMovie} id={movie.movie_id} />
+  
             </div> )
           ))
         )}

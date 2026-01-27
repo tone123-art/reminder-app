@@ -106,14 +106,14 @@ export default function NewAppointmentCard({ fetcher, open, onClose }: Props){
           <button
             type="submit"
             disabled={fetcher.state !== "idle"}
-            className="px-4 py-2 rounded-2xl bg-black text-white font-semibold hover:opacity-90 transition disabled:opacity-50"
+            className="btn-add rounded-2xl"
           >
             Save
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-2xl border font-semibold hover:bg-gray-100 transition"
+            className="btn-delete rounded-2xl border"
           >
             Cancel
           </button>

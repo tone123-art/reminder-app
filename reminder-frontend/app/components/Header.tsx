@@ -48,7 +48,7 @@ return <header className="w-full">
 <div className="border-slate-200 border-b-2 bg-slate-700">
 <nav>
     <ul className="flex flex-wrap justify-center gap-x-6 sm:gap-x-8 gap-y-2 py-2 px-3 font-semibold text-sm sm:text-base md:text-lg text-slate-300">
-        <li> <Link to='/' className="px-2 py-1 rounded hover:text-white hover:bg-white/10"> Home</Link></li>
+        <li> <Link to='/' className="px-2 py-1 rounded hover:text-white"> Home</Link></li>
         <li> <Link to='/calendar' className="px-2 py-1 rounded hover:text-white hover:text-white"> Calendar</Link></li>
         <li> <Link to='/tasks' className="px-2 py-1 rounded hover:text-white hover:text-white"> Tasks</Link></li>
         <li> <Link to='/shopping' className="px-2 py-1 rounded hover:text-white hover:text-white"> Shopping</Link></li>

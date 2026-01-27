@@ -3,8 +3,8 @@ export { default as loader} from "./loader"
 export { default as action} from "./action"
 import { useState } from "react";
 import type { LoaderData } from "~/lib/types/books";
-import { Pencil, Trash2 } from "lucide-react";
 import ListHeading from "../listUtils/listHeading";
+import ActionButtons from "../listUtils/actionButtons";
 
 export default function BookPage(){
 
@@ -39,7 +39,7 @@ return (
 
 
 {/* Heading of Movies list */}
-<ListHeading heading={'Books to Read'} btnName={'+ Add Book'} link={'/post/books'} />
+<ListHeading heading={'Books to Read'} btnName={'Add Book'} link={'/post/books'} />
 
 {/* Movies List */}
 <div className="list-container">
@@ -104,31 +104,30 @@ return (
         key={book.book_id}
         className="list-card "
         >
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
-         <p className="min-w-0 break-words sm:truncate">
-          {book.name} {book.author ? `by ${book.author}`: ''}
+       <div className="flex flex-col gap-2">
+  <div className="flex items-start gap-2">
+         <p className="    min-w-0 overflow-hidden
+    [display:-webkit-box] [-webkit-box-orient:vertical]
+    [-webkit-line-clamp:2]
+    sm:[-webkit-line-clamp:1]">
+          {book.name}  {book.author ? `by ${book.author}`: ''}
         </p>
          
             
-             <span className="self-start sm:self-auto sm:ml-auto rounded-lg bg-slate-700 px-2 py-1 text-xs sm:text-sm text-slate-300">
+             <span className="ml-auto rounded-lg bg-slate-700 px-2 py-1 text-xs sm:text-sm text-slate-300 whitespace-nowrap">
     {book.category}
   </span>
         
-            </div>
+          </div>
+</div>
         {book.notes ? (
             <p className="notes">{book.notes}</p>
         ) 
         : null}
-        <div className="mt-2 flex justify-end gap-2">
-            <button 
-              onClick={()=> setEditingId(book.book_id)}
-              className="btn-edit"> <Pencil size={16} /></button>
-          
-                <button 
-                onClick={()=>handleDeleteBook(book.book_id)}
-                className="btn-delete"> <Trash2 size={16}/>
-            </button>
-              </div></div>
+
+       <ActionButtons handleDelete={handleDeleteBook} setEditingId={setEditingId} id={book.book_id} />
+              
+              </div>
           )
           ))
         )}

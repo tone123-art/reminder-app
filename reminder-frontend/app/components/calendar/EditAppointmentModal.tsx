@@ -125,7 +125,7 @@ export default function EditAppointmentModal({ fetcher, appt, onClose }: Props){
                 { method: "post" }
               );
             }}
-            className="px-4 py-2 rounded-2xl border border-red-300 text-red-700 font-semibold hover:bg-red-50 transition"
+            className="btn-cancel rounded-2xl"
           >
             Delete
           </button>
@@ -134,14 +134,14 @@ export default function EditAppointmentModal({ fetcher, appt, onClose }: Props){
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-2xl border font-semibold hover:bg-gray-100 transition"
+              className="btn-delete rounded-2xl border"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={fetcher.state !== "idle"}
-              className="px-4 py-2 rounded-2xl bg-black text-white font-semibold hover:opacity-90 transition disabled:opacity-50"
+              className="btn-add rounded-2xl"
             >
               Save
             </button>

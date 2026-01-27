@@ -2,7 +2,6 @@ import { useLoaderData } from "react-router";
 import { useFetcher, useRevalidator } from "react-router";
 import { useEffect, useRef, useState , useMemo } from "react";
 import { useNavigate} from "react-router"  ;
-import { Link } from "react-router";
 import { AlarmClock, ClockPlus, ClipboardCheck } from "lucide-react";
 export {default as action} from "./action"
 export {default as loader} from "./loader"
@@ -12,6 +11,7 @@ import { type SortKey, type SortOrder, type DisplayType, priorityBg, sortTasks }
 import { matchesDisplay } from "~/lib/utils/taskFilter";
 import ListHeading from "../listUtils/listHeading";
 import { SlidersHorizontal, Pencil, Trash2} from "lucide-react";
+import ActionButtons from "../listUtils/actionButtons";
 
 type LoaderData = { tasklist : Task[];}
 
@@ -38,11 +38,18 @@ export default function Tasklist(){
    }, [fetcher.state, fetcher.data, revalidator]);
 
     // Handle Completion: 
+  const prevToggleState = useRef(toggleFetcher.state);
+
   useEffect(() => {
-    if (toggleFetcher.state === "idle" && toggleFetcher.data) {
-        revalidator.revalidate();
-    }
-    }, [toggleFetcher.state, toggleFetcher.data, revalidator]);
+      const wasBusy = prevToggleState.current !== "idle";
+  const isNowIdle = toggleFetcher.state === "idle";
+
+  if (wasBusy && isNowIdle) {
+    revalidator.revalidate();
+  }
+
+  prevToggleState.current = toggleFetcher.state;
+    }, [toggleFetcher.state,  revalidator]);
 
     // Handle Deleting
     async function handleDeleteTask(task_id: number) {
@@ -88,7 +95,7 @@ return (
 <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
  
  {/* Heading of the List */}
- <ListHeading heading={'To Do List'} link={'/post/tasks'} btnName={'+ Add Task'}/>
+ <ListHeading heading={'To Do List'} link={'/post/tasks'} btnName={'Add Task'}/>
   
 
   {/* Start of Container */}
@@ -139,7 +146,7 @@ return  (
 <div 
     key={task.task_id}
     className={`list-card ${task.completed ? 'opacity-50' :''}`}> 
-<div className="flex items-start gap-3 sm:gap-6">
+<div className="flex items-center gap-3 sm:gap-6">
       
       {/* Checkmark Button  Toggle Completion*/}
 
@@ -150,7 +157,7 @@ return  (
 <button
     type="submit"
     aria-label="Toggle completed"
-    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${priorityBg(task.priority)} shadow-md cursor-pointer
+    className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full ${priorityBg(task.priority)} shadow-md cursor-pointer
                 hover:border-2 hover:border-black active:scale-[0.95]
                 flex items-center justify-center
 ${task.completed ? "border-teal-500" : "border-black"}`}
@@ -221,15 +228,15 @@ ${task.completed ? "border-teal-500" : "border-black"}`}
    )    
    : ( <>
     
-    <h2 className="text-lg font-semibold"> {task.name}</h2>
+    <h2 className="headline-small"> {task.name}</h2>
 
   
     
-    <div className="mt-2 flex flex-col gap-1 text-sm text-slate-300">
+    <div className="mt-2  gap-1 text-slate-300">
     { task.deadline && (
     <div className="flex flex-wrap items-center gap-1">               
-    <AlarmClock className="w-3 h-3" /> 
-    <span> Due: </span> 
+    <AlarmClock size={12} /> 
+    
     <span> {formatDateOnly(task.deadline)}   </span>  
     </div>
     )}  
@@ -237,33 +244,29 @@ ${task.completed ? "border-teal-500" : "border-black"}`}
   {/* Task Createt */}
   <div className="flex flex-wrap items-center gap-1">
   <ClockPlus size={12} />
-  <span> Created:{formatDateOnly(task.created_at)}
+  <span> {formatDateOnly(task.created_at)}
   </span>
   </div>
+
+
   
+
+
+
   {task.completed && (   
   <div className="flex flex-wrap items-center gap-1">
   <ClipboardCheck size={12} />
-  <span> Completed:{formatDateOnly(task.completed_at)}
+  <span> {formatDateOnly(task.completed_at)}
   </span>
   </div>
   )}
-  </div>
-              
-  {/* Edit Button */}
-  <div className="mt-3 flex justify-end gap-2">
+        
 
-  <button 
-      onClick={()=>setEditingId(task.task_id)}
-      className="btn-edit"> 
-      <Pencil size={16}/>
-  </button>  
+  <ActionButtons setEditingId={setEditingId} handleDelete={handleDeleteTask} id={task.task_id} />
+        
+ 
+   </div> 
 
-  {/* Delete Button */}
-  <button 
-      onClick={()=>handleDeleteTask(task.task_id)}
-      className="btn-delete">  <Trash2 size={16}/></button>  
- </div>
                            
   </> )}
           
