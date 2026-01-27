@@ -16,9 +16,13 @@ const app = express();
 app.set("trust proxy", 1);
 
 const allowedOrigins = new Set([
+  
   "https://app.reminderapp.org",
   // Optional: keep old Vercel domain during migration/debug
+  
   "https://reminder-app-eight-mauve.vercel.app",
+  
+  "http://localhost:5200",
 ]);
 
 

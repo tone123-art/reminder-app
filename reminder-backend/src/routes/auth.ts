@@ -3,48 +3,50 @@ import { pool } from "../db.js";
 import argon2 from "argon2";
 import crypto from "crypto";
 
-
 const router = Router();
+
+const isProd = process.env.NODE_ENV === "production";
 
 const COOKIE_NAME = "session";
 
-const cookieOptions = {
-  httpOnly: true,
-  secure: true,              
-  sameSite: "lax" as const,
-  domain: ".reminderapp.org",
-  path: "/",
-  maxAge: 1000 * 60 * 60 * 24 * 14,
-};
-
+const cookieOptions = isProd
+  ? {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax" as const,
+      domain: ".reminderapp.org",
+      path: "/",
+      maxAge: 1000 * 60 * 60 * 24 * 14,
+    }
+  : {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax" as const,
+      path: "/",
+      maxAge: 1000 * 60 * 60 * 24 * 14,
+    };
 
 // login route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
   // 1. Basic validation
   if (!email || !password) {
     return res.status(400).json({ error: "Missing credentials" });
   }
-
   // 2. Load user
   const userResult = await pool.query(
     "SELECT id, password_hash, role FROM users WHERE email = $1",
     [email.toLowerCase()]
   );
-
   if (userResult.rowCount === 0) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
-
   const user = userResult.rows[0];
-
   // 3. Verify password
   const ok = await argon2.verify(user.password_hash, password);
   if (!ok) {
     return res.status(401).json({ error: "Invalid credentials" });
   }
-
   // 4. Create session
   const sessionId = crypto.randomUUID();
   const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24 * 14);
@@ -53,9 +55,8 @@ router.post("/login", async (req, res) => {
     "INSERT INTO sessions (session_id, user_id, expires_at) VALUES ($1, $2, $3)",
     [sessionId, user.id, expiresAt]
   );
-
   // 5. Set cookie
-res.cookie(COOKIE_NAME, sessionId, cookieOptions);
+  res.cookie(COOKIE_NAME, sessionId, cookieOptions);
 
   return res.json({ ok: true });
 });
@@ -71,7 +72,7 @@ router.get("/me", async (req, res) => {
     FROM sessions
     JOIN users ON users.id = sessions.user_id
     WHERE sessions.session_id = $1
-      AND sessions.expires_at > now()
+    AND sessions.expires_at > now()
     `,
     [sessionId]
   );
@@ -83,7 +84,6 @@ router.get("/me", async (req, res) => {
   return res.json({ user: result.rows[0] });
 });
 
-
 // logout
 router.post("/logout", async (req, res) => {
   const sessionId = req.cookies.session;
@@ -92,13 +92,8 @@ router.post("/logout", async (req, res) => {
   }
 
 res.clearCookie(COOKIE_NAME, { domain: ".reminderapp.org", path: "/" });
-
-
-
-  res.json({ ok: true });
+res.json({ ok: true });
 });
-
-
 
 // new user:
 router.post("/signup", async (req, res) => {
@@ -124,7 +119,6 @@ router.post("/signup", async (req, res) => {
 
     // Hash password
     const passwordHash = await argon2.hash(password);
-
     // Create user (default role 'user' comes from DB default)
     const created = await pool.query(
       `INSERT INTO users (username, email, password_hash)
@@ -153,10 +147,5 @@ router.post("/signup", async (req, res) => {
     return res.status(500).json({ error: "Server error" });
   }
 });
-
-
-
-
-
 
 export default router;
