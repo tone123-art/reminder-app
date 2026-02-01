@@ -5,7 +5,7 @@ export default async function loader({ request }: LoaderFunctionArgs) {
   const cookie = request.headers.get("Cookie") ?? "";
   const apiBase = import.meta.env.VITE_API_URL;
 
-  const res = await fetch(`${apiBase}/api/books/`, {
+  const res = await fetch(`${apiBase}/api/users/`, {
   headers: cookie ? { Cookie: cookie } : undefined,
 });
   if (!res.ok) throw new Response("Failed to load users", { status: 500 });
